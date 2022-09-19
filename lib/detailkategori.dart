@@ -3,9 +3,9 @@ import 'package:technicaltest/detailproduk.dart';
 import 'apiservices.dart';
 import 'package:flutter/material.dart';
 
-class CategoryWise extends StatelessWidget {
+class DetailKategori extends StatelessWidget {
   final String categoryName;
-  const CategoryWise({key, required this.categoryName}) : super(key: key);
+  const DetailKategori({key, required this.categoryName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +36,19 @@ class CategoryWise extends StatelessWidget {
                               children: [
                                 Image.network(
                                   snapshot.data[index]['image'],
-                                  height: 70.0,
-                                  width: 30.0,
+                                  fit: BoxFit.fill,
                                 ),
-                                Text("\$" +
-                                    snapshot.data[index]['price'].toString())
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "\$" +
+                                      snapshot.data[index]['price'].toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 1,
+                                      color: Colors.green),
+                                )
                               ],
                             ),
                           ),
@@ -51,33 +59,41 @@ class CategoryWise extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(snapshot.data[index]['title']),
+                                  Text(
+                                    snapshot.data[index]['title'],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700),
+                                  ),
                                   const SizedBox(
                                     height: 10,
                                   ),
+                                  Text(
+                                    snapshot.data[index]['description'],
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        child: Icon(Icons.star),
+                                      ),
+                                      Container(
+                                          child: Text(snapshot.data[index]
+                                                  ['rating']['rate']
+                                              .toString())),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
                           ),
                         ]),
                       ));
-                  // return ListTile(
-                  //   title: Text(snapshot.data[index]['title']),
-                  //   leading: Image.network(
-                  //     snapshot.data[index]['image'],
-                  //     height: 50,
-                  //     width: 30,
-                  //   ),
-                  //   subtitle: Text("Price - \$" +
-                  //       snapshot.data[index]['price'].toString()),
-                  //   onTap: () {
-                  //     Navigator.push(context,
-                  //         // ignore: missing_return
-                  //         MaterialPageRoute(builder: (context) {
-                  //       return DetailProduct(snapshot.data[index]['id']);
-                  //     }));
-                  //   },
-                  // );
                 },
                 itemCount: snapshot.data.length,
               );
